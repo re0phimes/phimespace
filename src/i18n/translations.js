@@ -1,8 +1,8 @@
 export const translations = {
   zh: {
-    'intro.subtitle': '一个热爱技术的开发者',
+    'intro.subtitle': '做有挑战的事，走有壁垒的路',
     'intro.description':
-      '热衷于探索 AI、Web 开发和开源项目。这里汇集了我的实验场、知识库和技术博客，欢迎随意浏览。',
+      '在 AI 时代思考与分享。这里是我的实验场、知识库和技术博客。',
     'intro.learnMore': '了解更多 →',
     'site.aifaq': 'AI 问答知识库',
     'site.blog': '技术博客',
@@ -17,9 +17,9 @@ export const translations = {
     'about.back': '← 返回首页',
   },
   en: {
-    'intro.subtitle': 'A developer who loves technology',
+    'intro.subtitle': 'Do what\'s challenging, build what\'s defensible.',
     'intro.description':
-      'Passionate about AI, web development, and open source. Here you\'ll find my lab, knowledge base, and tech blog — feel free to explore.',
+      'Thinking and sharing in the age of AI. Here\'s my lab, knowledge base, and tech blog.',
     'intro.learnMore': 'Learn more →',
     'site.aifaq': 'AI Q&A Knowledge Base',
     'site.blog': 'Tech Blog',

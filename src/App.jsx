@@ -25,6 +25,9 @@ function App() {
           ))}
         </div>
       </main>
+      <footer className="text-center py-8 text-sm text-gray-400 dark:text-gray-600">
+        © 2026 Phimes
+      </footer>
     </>
   )
 }

@@ -15,7 +15,7 @@ export function SiteCard({ name, url, description, screenshot, rotation }) {
           loading="lazy"
         />
       </div>
-      <div className="p-4">
+      <div className="px-4 py-2">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
           {name}
         </h3>

@@ -23,7 +23,7 @@ export function Intro() {
           clearInterval(intervalRef.current)
           setTypingDone(true)
         }
-      }, 50)
+      }, 25)
     } else {
       clearInterval(intervalRef.current)
       setDisplayText('')

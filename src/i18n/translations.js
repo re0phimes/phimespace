@@ -1,0 +1,36 @@
+export const translations = {
+  zh: {
+    'intro.subtitle': '一个热爱技术的开发者',
+    'intro.description':
+      '热衷于探索 AI、Web 开发和开源项目。这里汇集了我的实验场、知识库和技术博客，欢迎随意浏览。',
+    'intro.learnMore': '了解更多 →',
+    'site.aifaq': 'AI 问答知识库',
+    'site.blog': '技术博客',
+    'site.demo': '项目演示',
+    'about.name': '陈老师',
+    'about.affiliation1': '中国科学院 · 全栈工程师',
+    'about.affiliation2': '滑铁卢大学 · 数学',
+    'about.techStack': '技术栈',
+    'about.links': '链接',
+    'about.wechat': '公众号',
+    'about.wechatTip': '微信搜索：别偷着学了带带我啊',
+    'about.back': '← 返回首页',
+  },
+  en: {
+    'intro.subtitle': 'A developer who loves technology',
+    'intro.description':
+      'Passionate about AI, web development, and open source. Here you\'ll find my lab, knowledge base, and tech blog — feel free to explore.',
+    'intro.learnMore': 'Learn more →',
+    'site.aifaq': 'AI Q&A Knowledge Base',
+    'site.blog': 'Tech Blog',
+    'site.demo': 'Project Demos',
+    'about.name': 'Mr. Chen',
+    'about.affiliation1': 'Chinese Academy of Sciences · Full-Stack Engineer',
+    'about.affiliation2': 'University of Waterloo · Mathematics',
+    'about.techStack': 'Tech Stack',
+    'about.links': 'Links',
+    'about.wechat': 'WeChat',
+    'about.wechatTip': 'Search on WeChat: 别偷着学了带带我啊',
+    'about.back': '← Back to Home',
+  },
+}

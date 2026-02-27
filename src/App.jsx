@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { useDarkMode } from './hooks/useDarkMode'
+import { LanguageProvider } from './i18n/LanguageContext'
 import { GridBackground } from './components/GridBackground'
 import { Navbar } from './components/Navbar'
 import { Home } from './pages/Home'
@@ -9,15 +10,17 @@ function App() {
   const [dark, setDark] = useDarkMode()
   return (
     <BrowserRouter>
-      <GridBackground />
-      <Navbar dark={dark} onToggle={() => setDark(!dark)} />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-      </Routes>
-      <footer className="text-center py-8 text-sm text-gray-400 dark:text-gray-600">
-        © 2026 Phimes
-      </footer>
+      <LanguageProvider>
+        <GridBackground />
+        <Navbar dark={dark} onToggle={() => setDark(!dark)} />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
+        <footer className="text-center py-8 text-sm text-gray-400 dark:text-gray-600">
+          © 2026 Phimes
+        </footer>
+      </LanguageProvider>
     </BrowserRouter>
   )
 }

@@ -1,9 +1,8 @@
+import { useDarkMode } from './hooks/useDarkMode'
+
 function App() {
-  return (
-    <div className="min-h-screen flex items-center justify-center">
-      <h1 className="text-3xl font-bold">phimes homepage</h1>
-    </div>
-  )
+  const [dark, setDark] = useDarkMode()
+  return <div>Dark: {dark ? 'yes' : 'no'}</div>
 }
 
 export default App

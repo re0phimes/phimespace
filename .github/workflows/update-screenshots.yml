@@ -1,0 +1,48 @@
+name: Update Screenshots
+
+on:
+  schedule:
+    - cron: '0 0 * * 1' # Every Monday at 00:00 UTC
+  workflow_dispatch: # Manual trigger
+
+jobs:
+  screenshots:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Take screenshots
+        run: |
+          node -e "
+          const { chromium } = require('playwright');
+          (async () => {
+            const browser = await chromium.launch();
+            const sites = [
+              { url: 'https://aifaq.phimes.top', file: 'public/screenshots/aifaq.png' },
+              { url: 'https://demo.phimes.top', file: 'public/screenshots/demo.png' },
+              { url: 'https://blog.phimes.top', file: 'public/screenshots/blog.png' },
+            ];
+            for (const site of sites) {
+              const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
+              await page.goto(site.url, { waitUntil: 'networkidle', timeout: 30000 });
+              await page.screenshot({ path: site.file });
+              await page.close();
+              console.log('Done:', site.file);
+            }
+            await browser.close();
+          })();
+          "
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/screenshots/
+          git diff --staged --quiet || (git commit -m "chore: update site screenshots" && git push)

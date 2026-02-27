@@ -1,6 +1,6 @@
 export function Navbar({ dark, onToggle }) {
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 backdrop-blur-sm bg-white/70 dark:bg-gray-950/70 border-b border-gray-200/50 dark:border-gray-800/50">
+    <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4">
       <span className="text-xl font-bold text-gray-900 dark:text-white">
         Phimes
       </span>

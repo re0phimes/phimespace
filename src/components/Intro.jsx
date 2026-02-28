@@ -13,16 +13,25 @@ export function Intro() {
     let i = 0
     setDisplayText('')
     setTypingDone(false)
-    intervalRef.current = setInterval(() => {
+
+    const getDelay = (char) => {
+      if ('，。！？、；：'.includes(char)) return 180 + Math.random() * 120
+      if (',.!?;:'.includes(char)) return 150 + Math.random() * 100
+      if (' '.includes(char)) return 40 + Math.random() * 30
+      return 20 + Math.random() * 40
+    }
+
+    const type = () => {
       i++
       if (i <= fullText.length) {
         setDisplayText(fullText.slice(0, i))
+        intervalRef.current = setTimeout(type, getDelay(fullText[i - 1]))
       } else {
-        clearInterval(intervalRef.current)
         setTypingDone(true)
       }
-    }, 25)
-    return () => clearInterval(intervalRef.current)
+    }
+    intervalRef.current = setTimeout(type, 300)
+    return () => clearTimeout(intervalRef.current)
   }, [locale])
 
   return (
@@ -41,7 +50,7 @@ export function Intro() {
         {typingDone && (
           <Link
             to="/about"
-            className="inline-block mt-3 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors underline underline-offset-4"
+            className="inline-block mt-4 px-5 py-2 text-base font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors underline underline-offset-4"
           >
             {t('intro.learnMore')}
           </Link>

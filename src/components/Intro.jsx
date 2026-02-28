@@ -14,18 +14,28 @@ export function Intro({ onTypingDone }) {
     const fullText = t('intro.description')
     const learnMore = t('intro.learnMore')
     let i = 0
-    let phase = 'desc' // 'desc' -> 'pause' -> 'link' -> 'done'
+    let phase = 'desc'
     let linkIdx = 0
     setDisplayText('')
     setLinkText('')
     setTypingDone(false)
     setShowCursor(true)
 
+    // Target ~3.8s total to sync with card entrance animation
+    // Budget: 200ms initial + desc + 300ms pause + link
+    const descLen = fullText.length
+    const linkLen = learnMore.length
+    const targetTotal = 3800
+    const overhead = 200 + 300 // initial delay + pause
+    const linkTime = linkLen * 250 // ~250ms per link char
+    const descBudget = targetTotal - overhead - linkTime
+    const baseDelay = Math.max(15, descBudget / descLen)
+
     const getDelay = (char) => {
-      if ('，。！？、；：'.includes(char)) return 180 + Math.random() * 120
-      if (',.!?;:'.includes(char)) return 150 + Math.random() * 100
-      if (' '.includes(char)) return 40 + Math.random() * 30
-      return 20 + Math.random() * 40
+      if ('，。！？、；：'.includes(char)) return baseDelay * 4 + Math.random() * 80
+      if (',.!?;:'.includes(char)) return baseDelay * 3 + Math.random() * 60
+      if (' '.includes(char)) return baseDelay * 0.6
+      return baseDelay + Math.random() * (baseDelay * 0.5)
     }
 
     const type = () => {
@@ -36,16 +46,16 @@ export function Intro({ onTypingDone }) {
           intervalRef.current = setTimeout(type, getDelay(fullText[i - 1]))
         } else {
           phase = 'pause'
-          intervalRef.current = setTimeout(type, 400)
+          intervalRef.current = setTimeout(type, 300)
         }
       } else if (phase === 'pause') {
         phase = 'link'
-        intervalRef.current = setTimeout(type, 200)
+        intervalRef.current = setTimeout(type, 100)
       } else if (phase === 'link') {
         linkIdx++
         if (linkIdx <= learnMore.length) {
           setLinkText(learnMore.slice(0, linkIdx))
-          intervalRef.current = setTimeout(type, 200 + Math.random() * 150)
+          intervalRef.current = setTimeout(type, 200 + Math.random() * 100)
         } else {
           phase = 'done'
           setTypingDone(true)
@@ -54,7 +64,7 @@ export function Intro({ onTypingDone }) {
         }
       }
     }
-    intervalRef.current = setTimeout(type, 300)
+    intervalRef.current = setTimeout(type, 200)
     return () => clearTimeout(intervalRef.current)
   }, [locale])
 

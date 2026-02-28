@@ -2,17 +2,24 @@ import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../i18n/LanguageContext'
 
-export function Intro() {
+export function Intro({ onTypingDone }) {
   const { locale, t } = useLanguage()
   const [displayText, setDisplayText] = useState('')
+  const [linkText, setLinkText] = useState('')
   const [typingDone, setTypingDone] = useState(false)
+  const [showCursor, setShowCursor] = useState(true)
   const intervalRef = useRef(null)
 
   useEffect(() => {
     const fullText = t('intro.description')
+    const learnMore = t('intro.learnMore')
     let i = 0
+    let phase = 'desc' // 'desc' -> 'pause' -> 'link' -> 'done'
+    let linkIdx = 0
     setDisplayText('')
+    setLinkText('')
     setTypingDone(false)
+    setShowCursor(true)
 
     const getDelay = (char) => {
       if ('，。！？、；：'.includes(char)) return 180 + Math.random() * 120
@@ -22,12 +29,29 @@ export function Intro() {
     }
 
     const type = () => {
-      i++
-      if (i <= fullText.length) {
-        setDisplayText(fullText.slice(0, i))
-        intervalRef.current = setTimeout(type, getDelay(fullText[i - 1]))
-      } else {
-        setTypingDone(true)
+      if (phase === 'desc') {
+        i++
+        if (i <= fullText.length) {
+          setDisplayText(fullText.slice(0, i))
+          intervalRef.current = setTimeout(type, getDelay(fullText[i - 1]))
+        } else {
+          phase = 'pause'
+          intervalRef.current = setTimeout(type, 400)
+        }
+      } else if (phase === 'pause') {
+        phase = 'link'
+        intervalRef.current = setTimeout(type, 200)
+      } else if (phase === 'link') {
+        linkIdx++
+        if (linkIdx <= learnMore.length) {
+          setLinkText(learnMore.slice(0, linkIdx))
+          intervalRef.current = setTimeout(type, 200 + Math.random() * 150)
+        } else {
+          phase = 'done'
+          setTypingDone(true)
+          setShowCursor(false)
+          onTypingDone?.()
+        }
       }
     }
     intervalRef.current = setTimeout(type, 300)
@@ -45,16 +69,16 @@ export function Intro() {
       <div className="mt-3">
         <p className="text-gray-600 dark:text-gray-300 max-w-lg mx-auto">
           {displayText}
-          {!typingDone && <span className="animate-pulse">|</span>}
+          {linkText && (
+            <Link
+              to="/about"
+              className="text-blue-500 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors underline underline-offset-4"
+            >
+              {linkText}
+            </Link>
+          )}
+          {showCursor && <span className="animate-pulse">|</span>}
         </p>
-        {typingDone && (
-          <Link
-            to="/about"
-            className="inline-block mt-4 px-5 py-2 text-base font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors underline underline-offset-4"
-          >
-            {t('intro.learnMore')}
-          </Link>
-        )}
       </div>
     </div>
   )

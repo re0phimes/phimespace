@@ -21,21 +21,21 @@ export function Intro({ onTypingDone }) {
     setTypingDone(false)
     setShowCursor(true)
 
-    // Target ~3.8s total to sync with card entrance animation
-    // Budget: 200ms initial + desc + 300ms pause + link
+    // Target ~2s total to sync with card entrance animation
+    // Budget: 100ms initial + desc + 200ms pause + link
     const descLen = fullText.length
     const linkLen = learnMore.length
-    const targetTotal = 3800
-    const overhead = 200 + 300 // initial delay + pause
-    const linkTime = linkLen * 250 // ~250ms per link char
+    const targetTotal = 2000
+    const overhead = 100 + 200
+    const linkTime = linkLen * 120
     const descBudget = targetTotal - overhead - linkTime
-    const baseDelay = Math.max(15, descBudget / descLen)
+    const baseDelay = Math.max(10, descBudget / descLen)
 
     const getDelay = (char) => {
-      if ('，。！？、；：'.includes(char)) return baseDelay * 4 + Math.random() * 80
-      if (',.!?;:'.includes(char)) return baseDelay * 3 + Math.random() * 60
-      if (' '.includes(char)) return baseDelay * 0.6
-      return baseDelay + Math.random() * (baseDelay * 0.5)
+      if ('，。！？、；：'.includes(char)) return baseDelay * 3 + Math.random() * 40
+      if (',.!?;:'.includes(char)) return baseDelay * 2.5 + Math.random() * 30
+      if (' '.includes(char)) return baseDelay * 0.5
+      return baseDelay + Math.random() * (baseDelay * 0.4)
     }
 
     const type = () => {
@@ -50,12 +50,12 @@ export function Intro({ onTypingDone }) {
         }
       } else if (phase === 'pause') {
         phase = 'link'
-        intervalRef.current = setTimeout(type, 100)
+        intervalRef.current = setTimeout(type, 80)
       } else if (phase === 'link') {
         linkIdx++
         if (linkIdx <= learnMore.length) {
           setLinkText(learnMore.slice(0, linkIdx))
-          intervalRef.current = setTimeout(type, 200 + Math.random() * 100)
+          intervalRef.current = setTimeout(type, 100 + Math.random() * 60)
         } else {
           phase = 'done'
           setTypingDone(true)
@@ -64,7 +64,7 @@ export function Intro({ onTypingDone }) {
         }
       }
     }
-    intervalRef.current = setTimeout(type, 200)
+    intervalRef.current = setTimeout(type, 100)
     return () => clearTimeout(intervalRef.current)
   }, [locale])
 
@@ -77,7 +77,7 @@ export function Intro({ onTypingDone }) {
         {t('intro.subtitle')}
       </p>
       <div className="mt-3">
-        <p className="text-gray-600 dark:text-gray-300 max-w-lg mx-auto">
+        <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
           {displayText}
           {linkText && (
             <Link

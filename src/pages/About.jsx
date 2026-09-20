@@ -1,7 +1,19 @@
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../i18n/LanguageContext'
 
-const techStack = ['Python', 'JavaScript/TypeScript', 'React', 'Node.js', 'Vue']
+const experience = ['about.exp1', 'about.exp2', 'about.exp3']
+
+const skills = [
+  'Python',
+  'JavaScript/TypeScript',
+  'React',
+  'Node.js',
+  'Vue',
+  'Training',
+  'Evaluation',
+  'Benchmark',
+  'Inference Optimization',
+]
 
 export function About() {
   const { t } = useLanguage()
@@ -18,21 +30,22 @@ export function About() {
       </div>
 
       <div className="space-y-2 text-center mb-10 text-gray-700 dark:text-gray-300">
-        <p>{t('about.affiliation1')}</p>
-        <p>{t('about.affiliation2')}</p>
+        {experience.map((key) => (
+          <p key={key}>{t(key)}</p>
+        ))}
       </div>
 
       <section className="mb-10">
         <h2 className="text-sm font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider text-center mb-4">
-          {t('about.techStack')}
+          {t('about.skills')}
         </h2>
         <div className="flex flex-wrap justify-center gap-2">
-          {techStack.map((tech) => (
+          {skills.map((skill) => (
             <span
-              key={tech}
+              key={skill}
               className="px-3 py-1 rounded-full text-sm bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300"
             >
-              {tech}
+              {skill}
             </span>
           ))}
         </div>

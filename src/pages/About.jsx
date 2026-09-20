@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../i18n/LanguageContext'
 
-const experience = ['about.exp1', 'about.exp2', 'about.exp3']
+const experience = ['about.exp1', 'about.exp2']
 
 const skills = [
   'Python',
